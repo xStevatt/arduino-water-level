@@ -1,0 +1,65 @@
+\usepackage[utf8]{inputenc}
+\usepackage[left = 2cm, right = 2cm, top = 2cm, bottom = 2cm]{geometry}
+\usepackage[italian]{babel}
+
+\usepackage{fontenc}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{dirtytalk}
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{biblatex}
+\usepackage{csquotes}
+\usepackage{hyperref}
+\usepackage{soul}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{etoolbox} 
+\usepackage{gensymb}
+\usepackage{multicol}
+\usepackage{bold-extra}
+\usepackage{tikz}
+\usepackage{minted}
+\usepackage{pgf-pie} 
+\usepackage[noabbrev]{cleveref}
+\usepackage{pgfplots} 
+\usepackage{sidecap}
+\pgfplotsset{width=6.6cm,compat=1.7}  
+
+\hypersetup{%
+  colorlinks=true,
+  urlbordercolor={1 1 1},
+  linkcolor={black},
+  raiselinks=false
+}
+
+\usetikzlibrary{arrows,shapes,positioning,shadows,trees}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+
+% No indenting
+\setlength{\parindent}{0pt} 
+% Change title format header
+\titleformat{\chapter}[display] 
+  {\normalfont\bfseries}{}{0pt}{\Large}
+
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
+
+% INTERLINEA:
+\onehalfspacing
