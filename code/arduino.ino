@@ -1,11 +1,11 @@
 /* Connessione al cloud Blynk */
-#define BLYNK_TEMPLATE_ID "TMPL3fb4h0Ok"
-#define BLYNK_TEMPLATE_NAME "ESP32 Plant Monitor"
-#define BLYNK_AUTH_TOKEN "lnSMTPUUtlQMEN7hHtaWv_GGI6RvShBJ"
+#define BLYNK_TEMPLATE_ID "***"
+#define BLYNK_TEMPLATE_NAME "***"
+#define BLYNK_AUTH_TOKEN "***"
 
 // Credenziali WiFi
-char ssid[] = "Fritz.WIFI" ;
-char pass[] = "CasaMozzanica00" ;
+char ssid[] = "***" ;
+char pass[] = "***" ;
 
 // Distanza dal sensore ad ultrasuoni in CM
 int emptyTankDistance = 70 ;  // Distanza quando il serbatoio è vuoto
@@ -30,6 +30,7 @@ using namespace ace_button;
 #define BuzzerPin  13  //G13
 #define GreenLed   14  //G14
 
+// Pin virtuali per Blynk
 #define VPIN_BUTTON_1    V1 
 #define VPIN_BUTTON_2    V2
 
@@ -83,7 +84,11 @@ void displayData(int value){
   display.display();
 }
 
-void measureDistance(){
+/* 
+  Metodo che serve a misurare la distanza in base al livello dell'acqua. 
+*/
+void measureDistance()
+{
 // Imposta il pin del trigger a basso per 2 uS
   digitalWrite(TRIGPIN, LOW);
   delayMicroseconds(2);
@@ -104,7 +109,8 @@ void measureDistance(){
  
   distance = ((duration / 2) * 0.343)/10;
 
-  if (distance > (fullTankDistance - 10)  && distance < emptyTankDistance ){
+  if (distance > (fullTankDistance - 10)  && distance < emptyTankDistance )
+  {
     waterLevelPer = map((int)distance ,emptyTankDistance, fullTankDistance, 0, 100);
     displayData(waterLevelPer);
     Blynk.virtualWrite(VPIN_BUTTON_1, waterLevelPer);
@@ -115,31 +121,52 @@ void measureDistance(){
     Serial.print(distance);
     Serial.println(" cm");
 
-    if (waterLevelPer < triggerPer){
+    if (waterLevelPer < triggerPer)
+    {
       digitalWrite(GreenLed, HIGH);
       if (toggleBuzzer == HIGH){
         digitalWrite(BuzzerPin, HIGH);
       }      
     }
-    if (distance < fullTankDistance){
+    if (distance < fullTankDistance)
+    {
       digitalWrite(GreenLed, LOW);
       if (toggleBuzzer == HIGH){
         digitalWrite(BuzzerPin, HIGH);
       } 
     }
 
-    if (distance > (fullTankDistance + 5) && waterLevelPer > (triggerPer + 5)){
+    if (distance > (fullTankDistance + 5) && waterLevelPer > (triggerPer + 5))
+    {
       toggleBuzzer = HIGH;
       digitalWrite(BuzzerPin, LOW);
     }        
-  }
+}
   
 // Attende prima di ripetere la misura
   delay(100);
 }
 
- 
-void setup() {
+/*
+   Questa funzione viene eseguita una sola volta all'avvio del microcontrollore e si occupa di inizializzare il
+   programma.
+   
+   Vengono impostati i pin per le connessioni del sensore ad ultrasuoni, del LED wifi e del pulsante.
+   
+   Viene inoltre impostata la modalità di funzionamento del pulsante e associata una funzione di gestione degli eventi
+   (in questo caso 'button1Handler').
+   
+   Viene quindi inizializzato il display OLED e avviata la connessione WiFi con le credenziali specificate.
+   
+   Viene poi configurato il timer 'SimpleTimer' per controllare la connessione al server Blynk ogni 2 secondi, e infine
+   viene configurato il server Blynk con l'autenticazione.
+   
+   Questa funzione è importante perché permette di inizializzare correttamente il programma e di impostare i parametri
+   necessari per il corretto funzionamento del sensore ad ultrasuoni, del display OLED, del pulsante e della connessione
+   WiFi con il server Blynk.
+*/
+void setup() 
+{
 // Imposta il monitor seriale
   Serial.begin(115200);
  
@@ -175,19 +202,43 @@ void setup() {
   delay(1000);
  
 }
- void loop() {
 
+/*
+   Questa funzione viene eseguita continuamente dal microcontrollore e si occupa di chiamare le funzioni 
+   necessarie per il funzionamento del programma. 
+   
+   In particolare, viene eseguita la funzione 'measureDistance()' per misurare la distanza con un sensore ad ultrasuoni
+   e aggiornare il valore della distanza all'interno del programma.
+   
+   Viene poi chiamata la funzione 'Blynk.run()' per mantenere attiva la connessione al server Blynk e gestire la comunicazione.
+   
+   Infine, viene eseguita la funzione 'timer.run()' per avviare il timer 'SimpleTimer' che eseguirà le funzioni
+   registrate quando è stato configurato.
+   
+   La funzione 'button1.check()' verifica inoltre se il pulsante è stato premuto e, se sì, esegue la funzione di gestione
+   dell'evento associata.
+*/
+ void loop() 
+ {
   measureDistance();
 
   Blynk.run();
   timer.run(); // Avvia SimpleTimer
 
   button1.check();
-   
 }
 
-void button1Handler(AceButton* button, uint8_t eventType, uint8_t buttonState) {
+/*
+   Questa funzione gestisce gli eventi relativi ad un pulsante. 
+   Riceve in input un puntatore ad un oggetto AceButton, un intero senza segno a 8 bit che rappresenta
+   il tipo di evento verificatosi (ad esempio, pulsante premuto, pulsante rilasciato, pulsante tenuto premuto)
+   e un intero senza segno a 8 bit che rappresenta lo stato corrente del pulsante.
+   Se l'evento è il rilascio del pulsante, la funzione spegne un buzzer e imposta un flag su LOW.
+*/
+void button1Handler(AceButton* button, uint8_t eventType, uint8_t buttonState) 
+{
   Serial.println("EVENT1");
+
   switch (eventType) {
     case AceButton::kEventReleased:
       //Serial.println("kEventReleased");
