@@ -86,7 +86,8 @@ La terza riga definisce la costante wifiLed e gli assegna il valore intero 2, ch
 
 \begin{multicols}{2}
 \begin{minted}[linenos,tabsize=2,breaklines]{C}
-void displayData(int value){
+void displayData(int value)
+{
   display.clearDisplay();
   display.setTextSize(4);
   display.setCursor(8,2);
@@ -109,6 +110,8 @@ La funzione \mintinline{C}{displayData(int value)} viene utilizzata per visualiz
     \item Aggiunge uno spazio e il simbolo percentuale al valore numerico stampato utilizzando la funzione \mintinline{C}{display.print(" ")} e \mintinline{C}{display.print("%")}.
     \item Aggiorna la display OLED utilizzando la funzione \mintinline{C}{display.display()}.
 \end{itemize}
+
+\newpage
 
 \subsubsection{Funzione di misurazione}
 
@@ -231,18 +234,32 @@ void setup() {
 }
 \end{minted}
 
+\begin{itemize}
+    \item pinMode(): Imposta la modalità dei vari pin utilizzati per i sensori e altri dispositivi.
+    \item digitalWrite(): Imposta lo stato iniziale dei LED e del buzzer come spenti (LOW).
+    \item button1.init(ButtonPin1): Inizializza il pulsante con il pin corrispondente.
+    \item WiFi.begin(ssid, pass): Connette il dispositivo alla rete WiFi utilizzando le credenziali fornite.
+    \item timer.setInterval(2000L, checkBlynkStatus): Imposta un timer per verificare la connessione al server Blynk ogni 2 secondi.
+    \item Blynk.config(auth): Configura la connessione Blynk utilizzando il token di autenticazione fornito. 
+\end{itemize}
+
 \subsubsection{Funzione \mintinline{C}{loop()}}
 
-\begin{minted}[tabsize=2,breaklines]{C}
-void loop() {
-  measureDistance();
-
-  Blynk.run();
-  timer.run(); 
-
-  button1.check();
-}
-\end{minted}
+\begin{multicols}{2}
+    \begin{minted}
+    [tabsize=2,breaklines]{C}
+    void loop() {
+      measureDistance();
+    
+      Blynk.run();
+      timer.run(); 
+    
+      button1.check();
+    }
+    \end{minted}
+    \columnbreak
+    Questa riga definisce la funzione \mintinline{C}{loop()}. Nel contesto di un microcontrollore come Arduino, questa funzione viene eseguita in un ciclo infinito dopo la funzione \mintinline{C}{setup()}.
+\end{multicols}
 
 \subsection{Integrazione con Blynk}
 
