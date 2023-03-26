@@ -14,7 +14,7 @@ This is a simple Arduino project that monitors the water level in a tank using a
 
 Connect the components as shown in the wiring diagram below:
 
-![Wiring Diagram](wiring_diagram.png)
+![Wiring Diagram](docs/img/sketch.png)
 
 ## Installing Libraries
 
