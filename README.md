@@ -35,7 +35,7 @@ To use this project, you will need to install the Blynk and NewPing libraries. F
 ## ⬆️ Uploading the Code
 
 1. Open the Arduino IDE.
-2. Copy and paste the code from the `water_level_monitoring.ino` file in this repository.
+2. Copy and paste the code from the `code/arduino.ino` file in this repository.
 3. Replace the `auth` variable with your Blynk authentication token.
 4. Select the correct board and port from the Tools menu.
 5. Upload the code to the Arduino.
